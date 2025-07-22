@@ -2,6 +2,7 @@ import numpy as np
 
 
 class Loss:
+    """Base class for loss functions"""
     def calculate(self, output, y):
         sample_losses = self.forward(output, y)
         data_loss = np.mean(sample_losses)
@@ -9,9 +10,10 @@ class Loss:
         return data_loss
 
 class Loss_CategoricalCrossentropy(Loss):
+    """Categorical cross entropy loss. Used for multiclass classifiers"""
     def forward(self, y_pred, y_true):
         samples = len(y_pred)
-        y_pred_clipped = np.clip(y_pred, 1e-7, 1-1e-7)
+        y_pred_clipped = np.clip(y_pred, 1e-7, 1-1e-7) # Clip gradients to prevent exploding
 
         if len(y_true.shape)==1:
             correct_confidences = y_pred_clipped[
@@ -43,5 +45,4 @@ class Loss_CategoricalCrossentropy(Loss):
         if len(y_true.shape) == 1:
             y_true = np.eye(labels)[y_true]
 
-      # Compute gradient
         self.dinputs = (dvalues - y_true) / samples

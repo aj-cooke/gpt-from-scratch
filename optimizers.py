@@ -1,6 +1,11 @@
 import numpy as np
 
+
 class Optimizer_SGD:
+  """
+  Optimize neural network with stochastic gradient descent.
+  Works with dense layers, embedding, attention, and layernorm.
+  """
   def __init__(self, learning_rate=1., decay=0., momentum=0.):
     self.learning_rate = learning_rate
     self.current_learning_rate = learning_rate
@@ -80,7 +85,7 @@ class Optimizer_SGD:
       else:
           bias_updates = -self.current_learning_rate * layer.dbiases
 
-      layer.biases += bias_updates  # ← always apply this!
+      layer.biases += bias_updates
 
   def update_layernorm(self, layer):
     if self.momentum:

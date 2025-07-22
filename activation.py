@@ -2,6 +2,7 @@ import numpy as np
 
 
 class Activation_ReLU:
+    """Rectified linear activation function forward and backward pass"""
     def forward(self, inputs):
         self.inputs = inputs
         self.output = np.maximum(0,inputs)
@@ -11,6 +12,7 @@ class Activation_ReLU:
         self.dinputs[self.inputs <= 0] = 0
 
 class Activation_Softmax:
+    """Softmax activation function forward and backward pass"""
     def forward(self, inputs):
         self.inputs = inputs
         exps = np.exp(inputs - np.max(inputs, axis=-1, keepdims=True))
